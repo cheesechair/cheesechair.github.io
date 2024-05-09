@@ -5,62 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Virtual Pet</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-    }
-    #pet {
-        width: 100px;
-        height: 100px;
-        background-color: #ffcc00;
-        border-radius: 50%;
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    #feed-btn, #play-btn {
-        margin-top: 20px;
-        display: block;
-    }
+  #pet {
+    width: 100px;
+    height: 100px;
+    background-color: #ffcc00;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.5s ease-in-out;
+  }
 </style>
 </head>
 <body>
 <div id="pet"></div>
-<button id="feed-btn">Feed</button>
-<button id="play-btn">Play</button>
+<button onclick="feedPet()">Feed</button>
+<button onclick="playWithPet()">Play</button>
 
 <script>
-    let petState = {
-        hunger: 50,
-        happiness: 50
-    };
+  let pet = document.getElementById('pet');
+  let lastFed = Date.now();
 
-    const petElement = document.getElementById('pet');
-    const feedBtn = document.getElementById('feed-btn');
-    const playBtn = document.getElementById('play-btn');
-
-    function updatePet() {
-        petElement.style.width = `${petState.happiness}px`;
-        petElement.style.height = `${petState.happiness}px`;
-        petElement.style.backgroundColor = `hsl(${petState.happiness * 1.2}, 100%, 50%)`;
+  function feedPet() {
+    if (Date.now() - lastFed > 2 * 60 * 60 * 1000) {
+      alert('Your pet is hungry! Time to feed it.');
+      lastFed = Date.now();
+    } else {
+      alert('Your pet is not hungry yet.');
     }
+  }
 
-    function feedPet() {
-        petState.hunger -= 10;
-        if (petState.hunger < 0) petState.hunger = 0;
-        updatePet();
-    }
+  function playWithPet() {
+    pet.style.transform = 'scale(1.2)';
+    setTimeout(() => {
+      pet.style.transform = 'scale(1)';
+    }, 1000);
+  }
 
-    function playWithPet() {
-        petState.happiness += 10;
-        if (petState.happiness > 100) petState.happiness = 100;
-        updatePet();
-    }
+  function movePet() {
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+    pet.style.left = x + 'px';
+    pet.style.top = y + 'px';
+  }
 
-    feedBtn.addEventListener('click', feedPet);
-    playBtn.addEventListener('click', playWithPet);
-
-    updatePet();
+  setInterval(movePet, 2000);
 </script>
 </body>
 </html>
