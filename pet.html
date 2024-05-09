@@ -8,12 +8,13 @@
   #pet {
     width: 100px;
     height: 100px;
-    background-color: #ffcc00;
+    background-color: var(--pet-color);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, background-color 0.5s;
+    border-radius: var(--pet-shape);
   }
 </style>
 </head>
@@ -43,13 +44,20 @@
   }
 
   function movePet() {
-    let x = Math.random() * window.innerWidth;
-    let y = Math.random() * window.innerHeight;
+    let x = Math.random() * (window.innerWidth - pet.offsetWidth);
+    let y = Math.random() * (window.innerHeight - pet.offsetHeight);
+    pet.style.transition = 'transform 0.5s ease-in-out, background-color 0.5s';
     pet.style.left = x + 'px';
     pet.style.top = y + 'px';
   }
 
   setInterval(movePet, 2000);
+
+  // Assign random color and shape based on device
+  let petColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  let petShape = Math.random() < 0.5 ? '50%' : '0%';
+  pet.style.setProperty('--pet-color', petColor);
+  pet.style.setProperty('--pet-shape', petShape);
 </script>
 </body>
 </html>
