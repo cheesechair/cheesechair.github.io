@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Pet</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #pet {
+        width: 100px;
+        height: 100px;
+        background-color: #ffcc00;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    #feed-btn, #play-btn {
+        margin-top: 20px;
+        display: block;
+    }
+</style>
+</head>
+<body>
+<div id="pet"></div>
+<button id="feed-btn">Feed</button>
+<button id="play-btn">Play</button>
+
+<script>
+    let petState = {
+        hunger: 50,
+        happiness: 50
+    };
+
+    const petElement = document.getElementById('pet');
+    const feedBtn = document.getElementById('feed-btn');
+    const playBtn = document.getElementById('play-btn');
+
+    function updatePet() {
+        petElement.style.width = `${petState.happiness}px`;
+        petElement.style.height = `${petState.happiness}px`;
+        petElement.style.backgroundColor = `hsl(${petState.happiness * 1.2}, 100%, 50%)`;
+    }
+
+    function feedPet() {
+        petState.hunger -= 10;
+        if (petState.hunger < 0) petState.hunger = 0;
+        updatePet();
+    }
+
+    function playWithPet() {
+        petState.happiness += 10;
+        if (petState.happiness > 100) petState.happiness = 100;
+        updatePet();
+    }
+
+    feedBtn.addEventListener('click', feedPet);
+    playBtn.addEventListener('click', playWithPet);
+
+    updatePet();
+</script>
+</body>
+</html>
