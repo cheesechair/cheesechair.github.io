@@ -6,7 +6,7 @@
 <title>dont close the page</title>
 </head>
 <body>
-<h1>Welcome to "dont close the page"</h1>
+<h1>Welcome to "dont close the page (alt-f4 to reset your time!11!!1!)"</h1>
 <p id="time-on-page">Time on this page: 0 seconds</p>
 
 <script>
@@ -29,6 +29,17 @@
             timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
         }
     };
+
+    document.addEventListener('keydown', (event) => {
+        const isAltKeyPressed = event.altKey;
+        const isF4KeyPressed = event.key === 'F4';
+
+        if (isAltKeyPressed && isF4KeyPressed) {
+            localStorage.removeItem('timeElapsed');
+            timeElapsed = 0;
+            timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
+        }
+    });
 </script>
 </body>
 </html>
