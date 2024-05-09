@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dont close the page</title>
+</head>
+<body>
+<h1>Welcome to "dont close the page"</h1>
+<p id="time-on-page">Time on this page: 0 seconds</p>
+
+<script>
+    let timeElapsed = 0;
+    const timeDisplay = document.getElementById('time-on-page');
+
+    setInterval(() => {
+        timeElapsed++;
+        timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
+    }, 1000);
+
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('timeElapsed', timeElapsed);
+    });
+
+    window.onload = () => {
+        const storedTime = localStorage.getItem('timeElapsed');
+        if (storedTime) {
+            timeElapsed = parseInt(storedTime);
+            timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
+        }
+    };
+</script>
+</body>
+</html>
