@@ -44,18 +44,39 @@
   }
 
   function movePet() {
-    let x = Math.random() * (window.innerWidth - pet.offsetWidth);
-    let y = Math.random() * (window.innerHeight - pet.offsetHeight);
-    pet.style.transition = 'transform 0.5s ease-in-out, background-color 0.5s';
-    pet.style.left = x + 'px';
-    pet.style.top = y + 'px';
+    let startX = parseFloat(pet.style.left) || 50;
+    let startY = parseFloat(pet.style.top) || 50;
+    let endX = Math.random() * (window.innerWidth - pet.offsetWidth);
+    let endY = Math.random() * (window.innerHeight - pet.offsetHeight);
+    
+    pet.style.transition = 'transform 2s ease-in-out';
+    pet.style.transform = `translate(${endX - startX}px, ${endY - startY}px)`;
+
+    setTimeout(() => {
+      pet.style.transition = 'none';
+      pet.style.left = endX + 'px';
+      pet.style.top = endY + 'px';
+    }, 2000);
   }
 
-  setInterval(movePet, 2000);
+  setInterval(movePet, 4000);
 
   // Assign random color and shape based on device
-  let petColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-  let petShape = Math.random() < 0.5 ? '50%' : '0%';
+  let petColor;
+  let petShape;
+  const savedColor = localStorage.getItem('petColor');
+  const savedShape = localStorage.getItem('petShape');
+  
+  if (savedColor && savedShape) {
+    petColor = savedColor;
+    petShape = savedShape;
+  } else {
+    petColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    petShape = Math.random() < 0.5 ? '50%' : '0%';
+    localStorage.setItem('petColor', petColor);
+    localStorage.setItem('petShape', petShape);
+  }
+
   pet.style.setProperty('--pet-color', petColor);
   pet.style.setProperty('--pet-shape', petShape);
 </script>
