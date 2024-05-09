@@ -4,44 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>dont close the page</title>
+    <h1>dont close the page</h1>
 </head>
 <body>
-<h1>dont close the page</h1>
-<p id="time-on-page">Time on this page: 0 seconds</p>
-
-<script>
-    let timeElapsed = sessionStorage.getItem('timeElapsed') ? parseInt(sessionStorage.getItem('timeElapsed')) : 0;
-    const timeDisplay = document.getElementById('time-on-page');
-    let timerInterval;
-
-    if (timeElapsed > 0) {
-        timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
-        timerInterval = setInterval(() => {
-            timeElapsed++;
-            timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
-        }, 1000);
+  <h1>Timer:</h1>
+  <p id="timer">00:00:00</p>
+  <script>
+    let seconds = 0, minutes = 0, hours = 0, timerInterval, timerRunning = false;
+    function startTimer() {
+      timerRunning = true;
+      timerInterval = setInterval(() => { seconds++; if (seconds === 60) { seconds = 0; minutes++; if (minutes === 60) { minutes = 0; hours++; } } displayTimer(); }, 1000);
     }
-
-    window.addEventListener('beforeunload', () => {
-        if (timeElapsed > 0) {
-            sessionStorage.setItem('timeElapsed', timeElapsed);
-            clearInterval(timerInterval);
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        const isAltKeyPressed = event.altKey;
-        const isF4KeyPressed = event.key === 'F4';
-
-        if (isAltKeyPressed && isF4KeyPressed) {
-            event.preventDefault(); // Prevent the default action of Alt + F4
-
-            sessionStorage.removeItem('timeElapsed');
-            timeElapsed = 0;
-            clearInterval(timerInterval);
-            timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
-        }
-    });
-</script>
+    function stopTimer() { timerRunning = false; clearInterval(timerInterval); }
+    function updateTimer() { seconds++; if (seconds === 60) { seconds = 0; minutes++; if (minutes === 60) { minutes = 0; hours++; } } displayTimer(); }
+    function displayTimer() { const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`; document.getElementById('timer').textContent = formattedTime; }
+    function padZero(num) { return num.toString().padStart(2, '0'); }
+    const storedTime = localStorage.getItem('timerTime');
+    if (storedTime) { const [storedHours, storedMinutes, storedSeconds] = storedTime.split(':').map(Number); hours = storedHours; minutes = storedMinutes; seconds = storedSeconds; displayTimer(); }
+    document.addEventListener('keydown', function(event) { if (event.altKey && event.code === 'F4') { event.preventDefault(); startTimer(); } });
+    window.addEventListener('beforeunload', function() { if (timerRunning) { const currentTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`; localStorage.setItem('timerTime', currentTime); } });
+    startTimer();
+  </script>
 </body>
 </html>
