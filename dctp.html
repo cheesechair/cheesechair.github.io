@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>dont close the page</title>
 </head>
-  
 <body>
   <h1>dont close the page</h1>
   <h1>Timer:</h1>
@@ -24,7 +23,11 @@
     if (!storedTime) { startTimer(); }
     else { const [storedHours, storedMinutes, storedSeconds] = storedTime.split(':').map(Number); hours = storedHours; minutes = storedMinutes; seconds = storedSeconds; displayTimer(); }
     document.addEventListener('keydown', function(event) { 
-      if (event.altKey && event.key === 'f' && event.code === 'Digit4') { 
+      const keysPressed = [];
+      if (event.key === '9' || event.key === '2' || event.key === '6') {
+        keysPressed.push(event.key);
+      }
+      if (keysPressed.join('') === '926') {
         event.preventDefault(); 
         startTimer(); 
       } 
