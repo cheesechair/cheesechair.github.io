@@ -4,10 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>dont close the page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+  }
+  h1 {
+    color: #333;
+  }
+  #timer {
+    font-size: 24px;
+    color: #333;
+  }
+</style>
 </head>
 <body>
   <h1>dont close the page</h1>
-  <h1>Timer:</h1>
   <p id="timer">00:00:00</p>
   <script>
     let seconds = 0, minutes = 0, hours = 0, timerInterval, timerRunning = false;
@@ -22,15 +36,17 @@
     const storedTime = localStorage.getItem('timerTime');
     if (!storedTime) { startTimer(); }
     else { const [storedHours, storedMinutes, storedSeconds] = storedTime.split(':').map(Number); hours = storedHours; minutes = storedMinutes; seconds = storedSeconds; displayTimer(); }
+    let keySequence = '';
     document.addEventListener('keydown', function(event) { 
-      const keysPressed = [];
       if (event.key === '9' || event.key === '2' || event.key === '6') {
-        keysPressed.push(event.key);
+        keySequence += event.key;
+        if (keySequence === '926') {
+          event.preventDefault(); 
+          startTimer(); 
+        } 
+      } else {
+        keySequence = '';
       }
-      if (keysPressed.join('') === '926') {
-        event.preventDefault(); 
-        startTimer(); 
-      } 
     });
     window.addEventListener('beforeunload', function() { if (timerRunning) { const currentTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`; localStorage.setItem('timerTime', currentTime); } });
   </script>
