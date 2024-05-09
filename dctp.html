@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>dont close the page</title>
-    <h1>dont close the page</h1>
+<title>Page Timer</title>
 </head>
 <body>
   <h1>Timer:</h1>
@@ -20,10 +19,10 @@
     function displayTimer() { const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`; document.getElementById('timer').textContent = formattedTime; }
     function padZero(num) { return num.toString().padStart(2, '0'); }
     const storedTime = localStorage.getItem('timerTime');
-    if (storedTime) { const [storedHours, storedMinutes, storedSeconds] = storedTime.split(':').map(Number); hours = storedHours; minutes = storedMinutes; seconds = storedSeconds; displayTimer(); }
+    if (!storedTime) { startTimer(); }
+    else { const [storedHours, storedMinutes, storedSeconds] = storedTime.split(':').map(Number); hours = storedHours; minutes = storedMinutes; seconds = storedSeconds; displayTimer(); }
     document.addEventListener('keydown', function(event) { if (event.altKey && event.code === 'F4') { event.preventDefault(); startTimer(); } });
     window.addEventListener('beforeunload', function() { if (timerRunning) { const currentTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`; localStorage.setItem('timerTime', currentTime); } });
-    startTimer();
   </script>
 </body>
 </html>
