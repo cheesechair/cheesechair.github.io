@@ -6,37 +6,37 @@
 <title>dont close the page</title>
 </head>
 <body>
-<h1>Welcome to "dont close the page (alt-f4 to reset your time!11!!1!)"</h1>
+<h1>dont close the page (press alt + f4 to start the timer again!1!!11!!1!</h1>
 <p id="time-on-page">Time on this page: 0 seconds</p>
 
 <script>
-    let timeElapsed = 0;
+    let timeElapsed = sessionStorage.getItem('timeElapsed') ? parseInt(sessionStorage.getItem('timeElapsed')) : 0;
     const timeDisplay = document.getElementById('time-on-page');
+    let timerInterval;
 
-    setInterval(() => {
-        timeElapsed++;
+    if (timeElapsed > 0) {
         timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
-    }, 1000);
+        timerInterval = setInterval(() => {
+            timeElapsed++;
+            timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
+        }, 1000);
+    }
 
     window.addEventListener('beforeunload', () => {
-        localStorage.setItem('timeElapsed', timeElapsed);
-    });
-
-    window.onload = () => {
-        const storedTime = localStorage.getItem('timeElapsed');
-        if (storedTime) {
-            timeElapsed = parseInt(storedTime);
-            timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
+        if (timeElapsed > 0) {
+            sessionStorage.setItem('timeElapsed', timeElapsed);
+            clearInterval(timerInterval);
         }
-    };
+    });
 
     document.addEventListener('keydown', (event) => {
         const isAltKeyPressed = event.altKey;
         const isF4KeyPressed = event.key === 'F4';
 
-        if (isAltKeyPressed && isF4KeyPressed) {
-            localStorage.removeItem('timeElapsed');
+        if (isAltKeyPressed && isF4KeyPressed && timeElapsed > 0) {
+            sessionStorage.removeItem('timeElapsed');
             timeElapsed = 0;
+            clearInterval(timerInterval);
             timeDisplay.textContent = `Time on this page: ${timeElapsed} seconds`;
         }
     });
