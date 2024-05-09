@@ -6,7 +6,7 @@
 <title>dont close the page</title>
 </head>
 <body>
-<h1>dont close the page (press alt + f4 to start the timer again!1!!11!!1!</h1>
+<h1>dont close the page</h1>
 <p id="time-on-page">Time on this page: 0 seconds</p>
 
 <script>
@@ -33,7 +33,9 @@
         const isAltKeyPressed = event.altKey;
         const isF4KeyPressed = event.key === 'F4';
 
-        if (isAltKeyPressed && isF4KeyPressed && timeElapsed > 0) {
+        if (isAltKeyPressed && isF4KeyPressed) {
+            event.preventDefault(); // Prevent the default action of Alt + F4
+
             sessionStorage.removeItem('timeElapsed');
             timeElapsed = 0;
             clearInterval(timerInterval);
