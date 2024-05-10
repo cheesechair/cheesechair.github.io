@@ -1,61 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>bouncy ball</title>
-<style>
-    body {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Screensaver</title>
+    <style>
+      body {
         margin: 0;
         overflow: hidden;
         background-color: black;
-    }
-    #ball {
+        color: white;
+        font-family: Arial, sans-serif;
+        position: relative; /* Set the body position to relative */
+      }
+      .info {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 16px;
+        z-index: 999; /* Ensure the values are displayed on top of everything else */
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Add a black background with 50% opacity */
+        padding: 5px;
+        border: 2px solid black; /* Add a black border */
+        border-radius: 5px; /* Add border radius */
+        display: none; /* Initially hide the menu */
+      }
+      .info.show {
+        display: block; /* Show the menu when .show class is applied */
+      }
+      .info span {
+        color: white; /* Set text color to white */
+      }
+      .trail {
         position: absolute;
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: red;
-    }
-</style>
-</head>
-<body>
-<div id="ball"></div>
-<script>
-    const ball = document.getElementById('ball');
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-    let x = screenWidth / 2;
-    let y = screenHeight / 2;
-    let dx = 20;
-    let dy = 20;
-    let colors = ["red", "green", "blue", "yellow", "purple"];
+        background-color: blue; /* Set common color for trail and ball */
+        opacity: 0.5; /* Set opacity for the trail */
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="ball"
+      style="
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: blue;
+      "
+    ></div>
+    <div class="info" id="info">
+      dx: <span id="dxValue">5</span>
+      <button onclick="changeValue('dx', 1)">+</button>
+      <button onclick="changeValue('dx', -1)">-</button>
+      <br />
+      dy: <span id="dyValue">5</span>
+      <button onclick="changeValue('dy', 1)">+</button>
+      <button onclick="changeValue('dy', -1)">-</button>
+      <br />
+      trailLength: <span id="trailLengthValue">20</span>
+      <button onclick="changeValue('trailLength', 1)">+</button>
+      <button onclick="changeValue('trailLength', -1)">-</button>
+    </div>
+    <script>
+      const ball = document.getElementById("ball");
+      const info = document.getElementById("info");
+      const dxValue = document.getElementById("dxValue");
+      const dyValue = document.getElementById("dyValue");
+      const trailLengthValue = document.getElementById("trailLengthValue");
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      let x = screenWidth / 2;
+      let y = screenHeight / 2;
+      let dx = 23;
+      let dy = 23;
+      let colors = ["red", "green", "blue", "yellow", "purple"];
+      let trailLength = 1900; // Initial value of trail length
+      let trail = [];
 
-    function updatePosition() {
+      function updatePosition() {
         x += dx;
         y += dy;
-        
+
         if (x >= screenWidth - 50 || x <= 0) {
-            dx = -dx;
-            changeColor();
+          dx = -dx;
+          changeColor();
         }
         if (y >= screenHeight - 50 || y <= 0) {
-            dy = -dy;
-            changeColor();
+          dy = -dy;
+          changeColor();
         }
 
-        ball.style.left = x + 'px';
-        ball.style.top = y + 'px';
+        // Create a new div element for the trail
+        const trailElement = document.createElement("div");
+        trailElement.classList.add("trail");
+        trailElement.style.left = x + "px";
+        trailElement.style.top = y + "px";
+        document.body.appendChild(trailElement);
+        trail.push(trailElement);
+
+        // Remove old trail elements
+        if (trail.length > trailLength) {
+          const removedTrail = trail.shift();
+          document.body.removeChild(removedTrail);
+        }
+
+        // Fade out trail elements gradually
+        trail.forEach((element, index) => {
+          const opacity = 1 - index / trailLength; // Calculate opacity based on trail length
+          element.style.opacity = opacity;
+        });
+
+        ball.style.left = x + "px";
+        ball.style.top = y + "px";
+
+        // Update the displayed values
+        dxValue.textContent = dx;
+        dyValue.textContent = dy;
+        trailLengthValue.textContent = trailLength;
 
         requestAnimationFrame(updatePosition);
-    }
+      }
 
-    function changeColor() {
+      function changeColor() {
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         ball.style.backgroundColor = randomColor;
-    }
+        document.querySelectorAll(".trail").forEach((trailElement) => {
+          trailElement.style.backgroundColor = randomColor;
+        });
+      }
 
-    updatePosition();
-</script>
-</body>
+      updatePosition();
+
+      // Event listeners for arrow keys, =/- keys, Page Up and Page Down keys
+      document.addEventListener("keydown", function (event) {
+        switch (event.key) {
+          case "ArrowUp":
+            dy -= 1; // Decrease dy when Up arrow key is pressed
+            break;
+          case "ArrowDown":
+            dy += 1; // Increase dy when Down arrow key is pressed
+            break;
+          case "ArrowLeft":
+            dx -= 1; // Decrease dx when Left arrow key is pressed
+            break;
+          case "ArrowRight":
+            dx += 1; // Increase dx when Right arrow key is pressed
+            break;
+          case "=":
+            dx += 1; // Increase dx when = key is pressed
+            dy += 1; // Increase dy when = key is pressed
+            break;
+          case "-":
+            dx -= 1; // Decrease dx when - key is pressed
+            dy -= 1; // Decrease dy when - key is pressed
+            break;
+          case "PageUp":
+            trailLength += 1; // Increase trail length when Page Up key is pressed
+            break;
+          case "PageDown":
+            if (trailLength > 1) {
+              trailLength -= 1; // Decrease trail length when Page Down key is pressed, but keep it above 0
+            }
+            break;
+          case " ":
+            toggleMenu(); // Toggle menu visibility when spacebar is pressed
+            break;
+        }
+      });
+
+      function toggleMenu() {
+        info.classList.toggle("show");
+      }
+
+      function changeValue(prop, amount) {
+        if (prop === "dx") {
+          dx += amount;
+        } else if (prop === "dy") {
+          dy += amount;
+        } else if (prop === "trailLength") {
+          trailLength += amount;
+          if (trailLength < 1) {
+            trailLength = 1; // Ensure trail length is always at least 1
+          }
+        }
+      }
+    </script>
+  </body>
 </html>
