@@ -1,96 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>My Projects</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone Project</title>
     <link
       rel="icon"
       type="image/png"
-      href="https://em-content.zobj.net/source/microsoft/153/raccoon_1f99d.png"
+      href="https://files.catbox.moe/le2qjn.png"
     />
-    <link
-      rel="stylesheet"
-      href="https://meyerweb.com/eric/tools/css/reset/reset.css"
-    />
+    
+    <script src="https://files.catbox.moe/d1p3gy.js"></script>
+    
+</head>
+<style>
 
-    <style>
-      * {
-        box-sizing: border-box;
-      }
+script {margin: 0px;}
 
-      body {
-        background: radial-gradient(green, black);
-        height: 100dvh;
+body {
+    background: skyblue;
+    color: white;
+    font-family: sans-serif;
+    margin: 16px 200px;
+    
+}
 
-        display: flex;
-        flex-direction: column;
+p {
+    width: 250;
+    font-size: larger;
+}
 
-        color: #d6d6d6;
+a {color: gray;}
 
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
+h1 {font-size: xx-large;}
 
-      .header-image > img {
-        border-radius: 8px;
-        height: 100%;
-      }
+h2 {font-size: x-large;}
 
-      .header-image {
-        display: block;
-        height: 100%;
-      }
+img {border-radius: 10px;}
+    
+#title {text-align: center;}
 
-      a {
-        color: #6bc7ff;
-      }
+#header {
+    text-align: center;
+    padding-bottom: 0px;
+}
 
-      h1 {
-        font-size: 2em;
-      }
+#header > h1 {font-size: xx-large;}
 
-      main a {
-        font-size: 1.5em;
-      }
+.content {
+    display: flex;
+    justify-content: center;
+}
 
-      main {
-        display: flex;
-        height: 100%;
-        flex-direction: column;
-        gap: 30%;
-        justify-content: start;
-        align-items: center;
-        padding: 2em;
-      }
+.content > p {width: 250px;}
 
-      .title {
-        text-align: center;
-        font-size: 1.8em;
-      }
+.content > h2 {width: 250px;}
 
-      .top {
-        display: flex;
-        height: 5rem;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px;
-      }
-    </style>
-  </head>
+#big-margins {margin: 16px 320px;}
 
-  <body>
-    <div class="top">
-      <a class="header-image" href="/racoondance.html"><img src="header.jpg" /></a>
-      <h1 class="title">My Projects</h1>
-      <a href="/racoon.html">🦝</a>
+#wide {width: 500px;}
+
+#source {font-size: xx-small;}
+
+</style>
+
+                            
+<body>
+    <h2 id="title">CAPSTONE PROJECT</h2>
+
+    <div id="header">
+        <h1>3 Main Types of Bridges</h1>
+        <h6>(I had to learn about)</h6>
     </div>
-
-    <main>
-      <ul>
-        <li><a href="projects/waves">waves</a></li>
-        <li><a href="projects/ben">ben</a></li>
-        <li><a href="projects/capstone">Capstone Project</a></li>
-      </ul>
-    </main>
-  </body>
+    
+    <div class="content">
+        
+        <h2>Suspension Bridges</h2>
+        <hr>
+        <h2>Arch Bridges</h2>
+        <hr>
+        <h2>Tied Arch Bridges</h2>
+    </div>
+    <div class="content">
+        <img src="https://files.catbox.moe/ylloh6.webp" width="250px">
+        <hr>
+        <img src="https://files.catbox.moe/xvn592.webp" width="250px">
+        <hr>
+        <img src="https://files.catbox.moe/yvqhwa.jpg" width="250px">
+    </div>
+    <div class="content">
+        <p>A suspension bridge works by sending the vertial loads through the heavy steel cables. These cables then transfer the load to the vertical towers, which carry the load into the ground and anchorages. These bridges can acheive longer lengths than any other type, though are very costly to produce.</p>
+        <hr>
+        <p>Arch bridges work by compression, moving the load through the arch to the foundations (one on each side).</p>
+        <hr>
+        <p>Tied arch bridges are a combination of arch and suspension bridges. The deck is suspended by vertical hangers, forcing compression on the arch. The deck acts as a tie, restricting the horizontal movement of the arch.</p>
+    </div>
+    <div id="header">
+        <h1>Why Parabolas?</h1>
+    </div>
+    <div class="content">
+        <p id="wide">"[if] the cable [is] completely horizontal, the forces must also be purely horizontal and there's no vertical component that could hold the mass up!" <a href="https://engineering.stackexchange.com/a/39459" id="source">(source)</a> The reason semicircles are not used instead of parabolas is because parabolas are more structurially sound. Take a look at this model made with blocks: <a href="https://www.youtube.com/watch?v=qfPt8J95R-A" id="source">(source)</a></p>
+    </div>
+    <div class="content" id="big-margins">
+        <img src="https://files.catbox.moe/82bgjx.png" width="400px">
+        <hr>
+        <img src="https://files.catbox.moe/w5td95.png" width="400px">
+    </div>
+    <div class="content">
+        <p id="wide">As you can see, with a load applied this model collapses. Now, take a look at this parabolic model:</p>
+    </div>
+    <div class="content" id="big-margins">
+        <img src="https://files.catbox.moe/shbw9n.png" width="400px">
+        <hr>
+        <img src="https://files.catbox.moe/6cxvzp.png" width="400px">
+    </div>
+    <div class="content">
+        <p id="wide">As shown, the parabolic shape is more structuarly stable than the circular one.</p>
+    </div>
+    <div id="header">
+        <h1>My Model</h1>
+    </div>
+    <div class="content">
+        <img src="https://files.catbox.moe/npom0z.jpg" height="400px">
+        <hr>
+        <img src="https://files.catbox.moe/kwzkdq.jpg" height="400px">
+        <hr>
+        <img src="https://files.catbox.moe/c3m06d.jpg" height="400px">
+    </div>
+    <div class="content">
+        <p id="wide">This is my model! I chose to build a suspension bridge, as it was the most interesting in my eyes. It's sitting off to the side. (don't worry, you can touch it) I've brought some weights as well, feel free to place those on the bridge.</p>
+    </div>
+    <div id="header">
+        <h1>What's it made out of?</h1>
+    </div>
+    <div class="content">
+        <p>Most of it is made out of Sintra:</p>
+    </div>
+    <div class="content">
+        <img src="https://files.catbox.moe/m3iizu.jpg" height="400px">
+    </div>
+    <div class="content">
+        <p id="wide">Sintra is a lightweight, flexible and easy to cut PVC plastic. There is some off to the side if you would like to touch it. My dad had a few large peices laying around, so it was an obvious choice. The connecting cables are made out of a small steel wire, fastened by copper ferrules. The building process was pretty straightforward and simple. Most if it is held together with hot glue, don't be too mean to it.</p>
+    </div>
+    <div id="header">
+        <h2>And finally...</h2>
+    </div>
+    <div id="header">
+        <h1>Thank you for checking out my project!</h1>
+    </div>
+</body>
 </html>
